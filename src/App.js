@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Quotes from "./quotes";
+import "./App.css";
+const App = (props) => {
+  const [quotes, setQuotes] = useState([]);
 
-function App() {
+  const getQuotes = () => {
+    fetch(`https://halla-quote-server.glitch.me/quotes/random`)
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        }
+        throw Error("Can not load the data");
+      })
+      .then((data) => {
+        setQuotes(data);
+      })
+
+      .catch(function (err) {
+        console.log(err.message);
+      });
+  };
+  useEffect(() => {
+    getQuotes();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Quotes quote={quotes.quote} author={quotes.author} />
+      <button onClick={() => getQuotes()}>Get a random quote</button>
     </div>
   );
-}
+};
 
 export default App;
