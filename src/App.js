@@ -5,7 +5,7 @@ const App = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
  const [refresh,setRefresh] = useState(false);
 
-
+///////
 /////////////////// first solution//////////////////////////
 //  const getQuotes = () => {
 //    setIsLoading(true);
